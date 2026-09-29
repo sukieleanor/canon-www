@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+*.local
+*.log
+.DS_Store
+coverage
+
+# Hoplite workspace metadata (attachments, runtime state)
+.hoplite/*
+!.hoplite/settings.json

@@ -1,0 +1,8 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #101827;
+  color: #f4efe6;
+  font-family: system-ui, sans-serif;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "endless-canon",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A never-ending, always-changing melody inspired by Pachelbel's Canon in D, with calm generative nature visuals.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "5.3.0",
+    "pixi.js": "8.21.0",
+    "tone": "15.1.22"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}
