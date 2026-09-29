@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Endless Canon — audio harness</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 16px 20px 60px;
+        background: #101827;
+        color: #d7e0ee;
+        max-width: 980px;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 12px;
+      }
+      h2 {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #8fa3c2;
+        margin: 20px 0 8px;
+      }
+      section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 10px;
+        align-items: center;
+      }
+      button,
+      select {
+        background: #1e2b45;
+        color: inherit;
+        border: 1px solid #34466b;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font: inherit;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #283a5e;
+      }
+      button.on {
+        background: #2f6f5c;
+        border-color: #4aa88c;
+      }
+      label.layer {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border: 1px solid #263553;
+        border-radius: 6px;
+      }
+      input[type='range'] {
+        width: 110px;
+      }
+      progress {
+        width: 180px;
+      }
+      pre {
+        background: #0a111d;
+        border: 1px solid #263553;
+        border-radius: 6px;
+        padding: 10px;
+        white-space: pre-wrap;
+        max-height: 320px;
+        overflow: auto;
+        font-size: 12px;
+        flex-basis: 100%;
+      }
+      #status {
+        color: #9ad1b8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Endless Canon — audio harness</h1>
+    <section>
+      <button id="start">Start audio</button>
+      <span id="status">audio not started</span>
+      <progress id="progress" max="1" value="0"></progress>
+      <button id="playpause">Pause</button>
+    </section>
+
+    <h2>Master</h2>
+    <section id="master"></section>
+
+    <h2>Melody instrument (a Canon-style phrase over D A Bm F#m G D G A)</h2>
+    <section id="melody"></section>
+
+    <h2>Backing parts (demo of each)</h2>
+    <section id="parts"></section>
+
+    <h2>Layers</h2>
+    <section id="layers"></section>
+
+    <h2>Scene ambience</h2>
+    <section id="scenes"></section>
+
+    <h2>Colour</h2>
+    <section id="colour"></section>
+
+    <h2>Full loop</h2>
+    <section>
+      <button id="loop">Play canon loop</button>
+      <label>Tempo <input id="bpm" type="range" min="50" max="120" value="76" /></label>
+    </section>
+
+    <h2>Recording</h2>
+    <section>
+      <button id="rec-wav">Record WAV</button>
+      <button id="rec-compressed">Record compressed</button>
+      <button id="rec-stop">Stop &amp; download</button>
+      <span id="rec-info"></span>
+    </section>
+
+    <h2>Verification</h2>
+    <section>
+      <button id="test-samples">Check samples</button>
+      <button id="test-all">Run offline audio tests</button>
+      <pre id="log"></pre>
+    </section>
+
+    <script type="module" src="./audio.ts"></script>
+  </body>
+</html>
