@@ -17,7 +17,11 @@ export interface SchedulerOptions {
   tempo: number;
 }
 
-/** Events that only matter to the visuals; dropped while the tab is hidden. */
+/**
+ * Events that only matter to the visuals. Tone.Draw drops them when they are late (a busy main
+ * thread must not cause bursts of stale particles) and they are skipped while the tab is hidden.
+ * Everything else drives UI state, the rewind history or scene seasons, so it is always delivered.
+ */
 const VISUAL_ONLY = new Set<keyof MusicEvents>([
   'noteOn',
   'bassNote',
@@ -90,7 +94,8 @@ export class Scheduler {
     if (this.repeatId === null) {
       this.repeatId = this.transport.scheduleRepeat((time) => this.onBeat(time), '4n', 0);
     }
-    this.transport.start('+0.05');
+    // Headroom so a busy first frame after pressing Play can't make the first notes late.
+    this.transport.start('+0.2');
     this.started = true;
     this.setPlaying(true);
   }
@@ -107,7 +112,7 @@ export class Scheduler {
       this.start(this.cycle);
       return;
     }
-    this.transport.start('+0.05');
+    this.transport.start('+0.1');
     this.setPlaying(true);
   }
 
@@ -281,11 +286,17 @@ export class Scheduler {
   }
 
   private emit<K extends keyof MusicEvents>(time: number, type: K, payload: MusicEvents[K]): void {
+    const visualOnly = VISUAL_ONLY.has(type);
     if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
       // requestAnimationFrame is paused in hidden tabs, so Draw would pile events up for hours.
-      if (!VISUAL_ONLY.has(type)) this.bus.emit(type, payload);
+      if (!visualOnly) this.bus.emit(type, payload);
       return;
     }
-    Tone.getDraw().schedule(() => this.bus.emit(type, payload), time + this.latency);
+    if (visualOnly) {
+      Tone.getDraw().schedule(() => this.bus.emit(type, payload), time + this.latency);
+      return;
+    }
+    const delay = (time + this.latency - Tone.getContext().currentTime) * 1000;
+    window.setTimeout(() => this.bus.emit(type, payload), Math.max(0, delay));
   }
 }

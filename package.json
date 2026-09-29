@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "A never-ending, always-changing melody inspired by Pachelbel's Canon in D, with calm generative nature visuals.",
   "type": "module",
+  "packageManager": "pnpm@10.31.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
